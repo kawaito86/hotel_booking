@@ -1,0 +1,35 @@
+
+{% extends "booking/layout.html" %}
+
+{% block body %}
+{% load static %}
+
+<section class="section__container">
+    <div id="check-availability">
+        <h1>Available Rooms</h1>
+        <br>
+        {% if message %}
+        <h2>{{ message }}</h2>
+        {% endif %}
+        <br>
+
+        {% if rooms %}
+        <ul>
+            {% for room in rooms %}
+            <li>
+                {{ room.room_type }} - {{ room.room_number }}: ${{ room.get_adjusted_price }}
+                
+                <a href="{% url 'book_room' room.id %}?check_in={{ check_in }}&check_out={{ check_out }}#book-room" class="btn">Book Now</a>
+            </li>
+            <br>
+            {% endfor %}
+            <br>
+        </ul>
+        {% else %}
+        <p>No rooms available for the selected dates.</p>
+        {% endif %}
+        <a href="{% url 'home' %}">Go back to Home</a>
+    </div>
+</section>
+
+{% endblock %}
